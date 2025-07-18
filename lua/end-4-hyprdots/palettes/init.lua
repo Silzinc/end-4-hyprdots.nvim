@@ -1,9 +1,9 @@
 local M = {}
 
 function M.get_palette(flavour)
-	local flvr = flavour or require("lua.lualine.themes.end-4-hyprdots-dark").flavour or "dark"
+	local flvr = flavour or require("end-4-hyprdots").flavour or "dark"
 	local _, palette = pcall(require, "end-4-hyprdots.palettes." .. flvr)
-	local O = require("lua.lualine.themes.end-4-hyprdots-dark").options
+	local O = require("end-4-hyprdots").options
 	local ans = vim.tbl_deep_extend("keep", O.color_overrides.all or {}, O.color_overrides[flvr] or {}, palette or {})
 
 	--[[

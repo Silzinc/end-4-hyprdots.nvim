@@ -1,6 +1,3 @@
-local is_vim = vim.fn.has "nvim" ~= 1
-if is_vim then require "end-4-hyprdots.lib.vim" end
-
 ---@type End4Hyprdots
 local M = {
 	default_options = {
@@ -55,9 +52,9 @@ local M = {
 			ufo = true,
 			rainbow_delimiters = true,
 			render_markdown = true,
-			semantic_tokens = not is_vim,
+			semantic_tokens = true,
 			telescope = { enabled = true },
-			treesitter = not is_vim,
+			treesitter = true,
 			treesitter_context = true,
 			barbecue = {
 				dim_dirname = true,
@@ -124,7 +121,7 @@ function M.compile()
 	local user_flavour = M.flavour
 	for flavour, _ in pairs(M.flavours) do
 		M.flavour = flavour
-		require("end-4-hyprdots.lib." .. (is_vim and "vim." or "") .. "compiler").compile(flavour)
+		require("end-4-hyprdots.lib.compiler").compile(flavour)
 	end
 	M.flavour = user_flavour -- Restore user flavour after compile
 end
@@ -216,8 +213,6 @@ function M.setup(user_conf)
 		end
 	end
 end
-
-if is_vim then return M end
 
 vim.api.nvim_create_user_command(
 	"End4Hyprdots",
