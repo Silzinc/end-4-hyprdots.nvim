@@ -1,5 +1,5 @@
 describe("hash", function()
-	local hash = require("catppuccin.lib.hashing").hash
+	local hash = require("end-4-hyprdots.lib.hashing").hash
 	it("typo", function() assert.are_not.equals(hash { custom_highlight = {} }, hash { ustom_highlight = {} }) end)
 	it(
 		"when table order is shuffled",

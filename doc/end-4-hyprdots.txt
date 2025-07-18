@@ -1,0 +1,15 @@
+*end-4-hyprdots.txt*       Auto-generated NeoVim theme for end-4/dots-hyprland
+
+==============================================================================
+Table of Contents                           *end-4-hyprdots-table-of-contents*
+
+1. How it works                                                 |how-it-works|
+
+==============================================================================
+1. How it works                                                 *how-it-works*
+
+This theme is forked from catppuccin/nvim with a two flavours (light/dark)
+whose palettes are updated when switching your background (assuming you use
+end-4/dots-hyprland) on Hyprland.
+
+You can refer to the documentation of catppuccin to configure this theme.

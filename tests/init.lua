@@ -11,7 +11,7 @@ local status, error = pcall(function()
 	vim.opt.runtimepath:prepend(lazypath)
 
 	require("lazy").setup({
-		{ "catppuccin/nvim", dev = true },
+		{ "end-4-hyprdots/nvim", dev = true },
 	}, {
 		root = root .. "/plugins",
 		dev = {
@@ -19,8 +19,8 @@ local status, error = pcall(function()
 		},
 	})
 
-	require("catppuccin").setup()
-	vim.cmd.colorscheme "catppuccin"
+	require("end-4-hyprdots").setup()
+	vim.cmd.colorscheme "end-4-hyprdots"
 end)
 
 if error then print(error) end
