@@ -201,7 +201,7 @@ function M.setup(user_conf)
 	-- Get current hash
 	local git_path = debug.getinfo(1).source:sub(2, -24) .. ".git"
 	local git = vim.fn.getftime(git_path) -- 2x faster vim.loop.fs_stat
-	local hash = require("end-4-hyprdots.lib.hashing").hash(user_conf)
+	local hash = require("end-4-hyprdots.lib.hashing").hash { user_conf, end_4_hyprdots_palette }
 		.. (git == -1 and git_path or git) -- no .git in /nix/store -> cache path
 		.. (vim.o.winblend == 0 and 1 or 0) -- :h winblend
 		.. (vim.o.pumblend == 0 and 1 or 0) -- :h pumblend
