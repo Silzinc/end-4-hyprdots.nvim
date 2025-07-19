@@ -1,6 +1,7 @@
 <!-- panvimdoc-ignore-start -->
 
-[AutoNvimReloadBetter.webm](https://github.com/user-attachments/assets/e60e8402-0ccd-45ad-a3da-eb5fcfbfc117)
+[End4HyprdotsNvimInAction.webm](https://github.com/user-attachments/assets/f443e131-eff8-4586-b41a-56ad54851414)
+
 
 # end-4-hyprdots Neovim theme
 
