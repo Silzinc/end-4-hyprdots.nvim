@@ -56,7 +56,7 @@ return {
 	sapphire = colors["term14"],
 	blue = colors["term4"],
 	lavender = colors["term12"],
-	text = colors["onBackground"],
+	text = colors["term7"],
 	subtext1 = colors["onSurface"],
 	subtext0 = colors["onSurfaceVariant"],
 	overlay2 = gradient[1],
@@ -65,8 +65,7 @@ return {
 	surface2 = gradient[4],
 	surface1 = gradient[5],
 	surface0 = gradient[6],
-	base = colors["background"],
+	base = colors["term0"],
 	mantle = colors["surfaceContainerLow"],
 	crust = colors["surfaceContainerLowest"],
-},
-	dark_mode and "dark" or "light"
+}
