@@ -186,9 +186,8 @@ function M.setup(user_conf)
 	M.options = vim.tbl_deep_extend("keep", user_conf, M.default_options)
 	M.options.highlight_overrides.all = user_conf.custom_highlights or M.options.highlight_overrides.all
 	-- Load generated colors
-	local end_4_hyprdots_palette, flvr = require "end-4-hyprdots.lib.generate_colors" or {}, "all"
-	M.options.color_overrides =
-		vim.tbl_deep_extend("keep", M.options.color_overrides, { [flvr] = end_4_hyprdots_palette })
+	local end_4_hyprdots_palette = require "end-4-hyprdots.lib.generate_colors" or {}
+	M.options.color_overrides = vim.tbl_deep_extend("keep", M.options.color_overrides, { all = end_4_hyprdots_palette })
 
 	-- Get cached hash
 	local cached_path = M.options.compile_path .. M.path_sep .. "cached"
