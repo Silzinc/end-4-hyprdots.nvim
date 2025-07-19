@@ -186,8 +186,8 @@ function M.setup(user_conf)
 	M.options = vim.tbl_deep_extend("keep", user_conf, M.default_options)
 	M.options.highlight_overrides.all = user_conf.custom_highlights or M.options.highlight_overrides.all
 	-- Load generated colors
-	local end_4_hyprdots_palette = require "end-4-hyprdots.lib.generate_colors" or {}
-	M.options.color_overrides = vim.tbl_deep_extend("keep", M.options.color_overrides, end_4_hyprdots_palette)
+	local illogical_impulse_palette = require "end-4-hyprdots.lib.generate_colors" or {}
+	M.options.color_overrides = vim.tbl_deep_extend("keep", M.options.color_overrides, illogical_impulse_palette)
 
 	-- Get cached hash
 	local cached_path = M.options.compile_path .. M.path_sep .. "cached"
@@ -201,7 +201,7 @@ function M.setup(user_conf)
 	-- Get current hash
 	local git_path = debug.getinfo(1).source:sub(2, -24) .. ".git"
 	local git = vim.fn.getftime(git_path) -- 2x faster vim.loop.fs_stat
-	local hash = require("end-4-hyprdots.lib.hashing").hash(user_conf)
+	local hash = require("end-4-hyprdots.lib.hashing").hash { user_conf, illogical_impulse_palette }
 		.. (git == -1 and git_path or git) -- no .git in /nix/store -> cache path
 		.. (vim.o.winblend == 0 and 1 or 0) -- :h winblend
 		.. (vim.o.pumblend == 0 and 1 or 0) -- :h pumblend

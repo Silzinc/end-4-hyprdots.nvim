@@ -1,6 +1,6 @@
-local function report_error(msg) vim.notify("end-4-hyprdots theme cannot load: " .. msg, vim.diagnostic.severity.ERROR) end
 local blend = require("end-4-hyprdots.utils.colors").blend
 local decode = require("end-4-hyprdots.utils.json").decode
+local hash = require("end-4-hyprdots.lib.hashing").hash
 
 local join = vim.fs.joinpath
 local isdir = vim.fn.isdirectory
@@ -14,7 +14,11 @@ local xdg_config_home = os.getenv "XDG_CONFIG_HOME" or join(home, ".config")
 local config_path = join(xdg_config_home, "illogical-impulse", "config.json")
 local config_file = io.open(config_path)
 if not config_file then
-	report_error(string.format("illogical-impulse config file '%s' does not exist.", config_path))
+	vim.notify(
+		"end-4-hyprdots theme cannot load: "
+			.. string.format("illogical-impulse config file '%s' does not exist.", config_path),
+		vim.diagnostic.ERROR
+	)
 	return
 end
 
@@ -30,27 +34,17 @@ local colorgen_script = join(xdg_config_home, "quickshell", "ii", "scripts", "co
 -- It takes about half a second to load the material colors from the python script.
 -- Since it only depends on the background image and the illogical-impulse scheme,
 -- the results are not queried if these settings did not change.
--- The actual colors are stored by catppuccin's compilation routine. Thus, return
--- an empty object, these will be loaded as wanted.
+-- The actual colors are also stored by catppuccin's compilation routine. Storing
+-- them again is redundant, but it was the easiest way to program it.
 local cache_path = join(require("end-4-hyprdots").options.compile_path, "illogical-impulse-params")
 local f = loadfile(cache_path)
 
-local key_str = table.concat({ scheme, bg_path }, "\0")
-
--- Check if the stored and current values are equal and return {} is so.
-if f and f() == key_str then return {} end
-
--- Else, save the params for the next load. string.dump hardcodes its content as a string,
--- without compiling it (key_str would be stored as 'key_str'). loadstring bypasses this
--- by evaluating its input as lua code.
-local bin = string.dump(assert(loadstring(string.format('return "%s"', key_str))))
-
-local cache_file = assert(
-	io.open(cache_path, "wb"),
-	"end-4-hyprdots theme cannot load: failed to open illogical-impulse params cache file '" .. cache_path .. "'."
-)
-cache_file:write(bin)
-cache_file:close()
+-- Check if the stored and current values are equal and return the stored palettes if so.
+local hash = hash { scheme, bg_path }
+if f then
+	local stored_vals = f()
+	if stored_vals[1] == hash then return stored_vals[2] end
+end
 
 ---@param mode "light" | "dark"
 ---@return table
@@ -74,12 +68,16 @@ local function get_palette(mode)
 	local colors = {}
 
 	if src.code ~= 0 then
-		report_error(string.format(
-			[[failed to generate the palette of flavour '%s'.
+		vim.notify(
+			"end-4-hyprdots theme cannot load: "
+				.. string.format(
+					[[failed to generate the palette of flavour '%s'.
 STDERR: %s]],
-			mode,
-			src.stderr
-		))
+					mode,
+					src.stderr
+				),
+			vim.diagnostic.severity.ERROR
+		)
 		return {}
 	end
 
@@ -131,4 +129,18 @@ STDERR: %s]],
 	}
 end
 
-return { dark = get_palette "dark", light = get_palette "light" }
+local palettes = { dark = get_palette "dark", light = get_palette "light" }
+
+-- Else, save the params for the next load. string.dump hardcodes its content as a string,
+-- without compiling it (key_str would be stored as 'key_str'). loadstring bypasses this
+-- by evaluating its input as lua code.
+local bin = string.dump(assert(loadstring(string.format("return %s", vim.inspect { hash, palettes }))))
+
+local cache_file = assert(
+	io.open(cache_path, "wb"),
+	"end-4-hyprdots theme cannot load: failed to open illogical-impulse params cache file '" .. cache_path .. "'."
+)
+cache_file:write(bin)
+cache_file:close()
+
+return palettes
