@@ -11,7 +11,7 @@ whose palettes are updated when switching your background (assuming you use
 
 You can refer to the documentation of catppuccin to configure this theme.
 
-# Features
+## Features
 
 * Generates and loads a neovim theme depending on your choice of wallpaper and illogical-impulse scheme. Colors are based on end-4's terminal theme engine.
 * Hot-reload for dark/light transition only (I could not find a way to do the others in Neovim).

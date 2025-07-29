@@ -33,6 +33,8 @@
 ---@field styles CtpStyles?
 -- Should default integrations be used.
 ---@field default_integrations boolean?
+-- Should detect integrations automatically
+---@field auto_integrations boolean?
 -- Toggle integrations. Integrations allow End4Hyprdots to set the theme of various plugins.
 ---@field integrations CtpIntegrations?
 -- End4Hyprdots colors can be overwritten here.
@@ -118,6 +120,7 @@
 ---@field beacon boolean?
 ---@field blink_cmp CtpIntegrationsBlinkCmp | boolean?
 ---@field cmp boolean?
+---@field buffon boolean?
 -- `coc.nvim` links to `native_lsp` highlight groups, so you can use
 -- `native_lsp.virtual_text` and `native_lsp.underlines` to style diagnostics.
 ---@field coc_nvim boolean?
@@ -291,12 +294,14 @@
 ---@field enabled boolean
 -- Sets the color of the indent scope line
 ---@field indent_scope_color CtpColor?
+-- The style of Snacks.picker
+---@field picker_style "classic" | "nvchad" | "nvchad_outlined" | nil
 
 ---@class CtpIntegrationTelescope
 -- Whether to enable the telescope integration
 ---@field enabled boolean?
 -- The style of Telescope
----@field style "classic" | "nvchad" | nil
+---@field style "classic" | "nvchad" | "nvchad_outlined" | nil
 
 ---@class CtpIntegrationIlluminate
 -- Whether to enable the vim-illuminate integration
